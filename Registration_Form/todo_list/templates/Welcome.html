@@ -1,0 +1,346 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STACKFUSION Assignment</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+<!--#customers tr:nth-child{background-color: #ddd;}-->
+
+#customers tr:hover {background-color: #04AA6D;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+.del{
+	width: 56px;
+	
+}
+	</style>
+
+</head>
+<body>
+	<div id="clock"></div>
+	<svg id="first" viewBox="0 0 960 300">
+	<symbol id="v-text">
+		<text text-anchor="middle" x="50%" y="80%" style="margin-left:20px;"> Welcome</text>
+	</symbol>
+
+	<g class = "g-ants">
+		<use xlink:href="#v-text" class="text-copy"></use>
+		<use xlink:href="#v-text" class="text-copy"></use>
+		<use xlink:href="#v-text" class="text-copy"></use>
+		<use xlink:href="#v-text" class="text-copy"></use>
+		<use xlink:href="#v-text" class="text-copy"></use>
+	</g>
+</svg>
+	<svg id="second" viewBox="0 0 1550 200">
+	<symbol id="s-text">
+		<text text-anchor="middle" x="40%" y="80%">STACKFUSION</text>
+	</symbol>
+
+	<g class = "g-ants">
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+	</g>
+</svg>
+	<script type="text/javascript">
+     	   setInterval(displayclock, 500);
+     		function displayclock () {
+     			var time = new  Date();
+     			var hrs = time.getHours();
+     			var min =time.getMinutes();
+     			var sec =time.getSeconds();
+     			var en = 'AM';
+
+     			if (hrs > 12){
+     				en = 'PM';
+     			}
+
+     				if (hrs >12) {
+     					hrs = hrs - 12;
+
+     				}
+     				if (hrs == 0) {
+     					hrs = 12;
+					}
+ 					if (hrs < 10) {
+ 						hrs = '0' + hrs;
+ 					}
+ 					if (min < 10) {
+ 						min = '0' + min;
+ 					}
+ 					if (sec < 10) {
+ 						sec = '0' + sec;
+ 					}
+					document.getElementById('clock').innerHTML = hrs + ':' + min + ':' +sec  + ' '+en;
+				}
+
+     </script>
+
+<button onclick="login()" style="width:210px; margin-top:70px; margin-left:560px;">
+Register Your Self</button>
+<br><br>
+<h1 style="color:white; text-align:center;">User Registeration Data</h1>
+<table style="color:white;" id="customers">
+                      <tr>
+                        <th>Sr.No.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+						<th>DOB</th>
+						<th>Action</th>
+                      </tr>
+				<tbody id="user_table" style="colour:red;"></tbody>
+</table>
+
+<div id="modal_wrapper_login" class="modal">
+
+  <div class="modal-content animate">
+
+    <div class="imgcontainer">
+      <span onclick= "cut()" class="close" title="Close PopUp">&times;</span>
+      <img src="{% static 'images/1.png' %}" class="avatar">
+
+    </div>
+	  <div class="container">
+<!--    <div id="abc">-->
+<!--		<h1 style="text-align:center">Login</h1>-->
+<!--        <form method="post" action="{% url 'login' %}">-->
+<!--            {% csrf_token %}-->
+<!--            <input type="text" placeholder="Email id" name="username">-->
+<!--      	    <input type="password" placeholder="Password" name="password">-->
+<!--      	    <input id="login" type="submit" value="Login">-->
+<!--         </form>-->
+<!--		<button onclick="xyzz()">Create new Account</button>-->
+<!--      	<a href="#" style="text-decoration:none; float:left; margin-left:34px; margin-top:16px;">Forgot Password ?</a><br><br>-->
+<!--    </div>-->
+
+		  <h1 style="text-align:center">Register</h1>
+           <form id='reg' method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+		  <input type="text" id="name" placeholder="Enter Your Name" name="name">
+		  <p id="name_err" style="margin-left:4vh;color:#F00;font-size:small;"></p>
+		  <input type="text" id="email" placeholder="Enter Your Email id" name="email">
+		  <p id="email_err" style="margin-left:4vh; color:#F00;font-size:small; "></p>
+		  <input type="text" id="mob" placeholder="Enter Your Mobile No" name="mobile">
+		  <p id="mob_err" style="margin-left:4vh; color:#F00;font-size:small; "></p>
+      	  <input type="date" id='dob' placeholder="Enter Date Of Birth" name="dob">
+		  <p id="dob_err" style="margin-left:4vh; color:#F00;font-size:small; "></p>
+		  <p id="dob_err1" style="margin-left:4vh; color:#F00;font-size:small; "></p>
+		  <button id="signup"  type="button">Register</button>
+           </form>
+
+	  </div>
+  </div>
+</div>
+
+	<script>
+		$(document).ready(function () {
+			 $.ajax({ // create an AJAX call...
+			  type: 'GET',
+			  url: 'data_view',
+			  success: function (response) {
+			  	 	var cnt=1;
+					var result = '';
+					// Display the returned data in browser
+					var data=response["user_data"]
+					console.log(data)
+					for (var i = 0; i < data.length; i++) {
+					
+					 result = result + '<tr> <td>'+cnt+'</td><td>'+data[i]["Name"]+'</td><td>'+data[i]['Email']+'</td><td>'+data[i]['Mobile']+'</td><td>'+data[i]['dob']+'</td><td><button class="del" onclick="Delete_me('+data[i]['id']+')"><i class="fa fa-trash"></i></button></td></tr>';
+					 cnt = cnt+1;
+					}
+					$('#user_table').html(result);
+			  }
+			  });
+
+		});
+	</script>
+<script type="text/javascript">
+// If user clicks anywhere outside of the modal, Modal will close
+
+var modal = document.getElementById('modal-wrapper_login');
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        flag.style.display="block";
+        flag1.style.display="none";
+
+    }
+}
+
+function login(){
+	document.getElementById('modal_wrapper_login').style.display="block";
+
+
+}
+function cut(){
+		document.getElementById('modal_wrapper_login').style.display="none";
+
+
+}
+
+</script>
+
+<script>
+$('#signup').on('click',function(){
+
+		var name=$('#name').val();
+		var email=$('#email').val();
+		var mobile=$('#mob').val();
+		var date=$('#dob').val();
+		var mob_n=mobile.length;
+
+		let err_c=0;
+
+
+
+
+		if(name==''){
+		$('#name_err').text('Name field cannot be empty');
+		err_c+=1;
+
+
+		}
+		else{
+		$('#name_err').text('');
+		err_c==0;
+
+		}
+		if(email==''){
+		$('#email_err').text('Email field cannot be empty');
+		err_c+=1;
+
+
+		}
+		else{
+		if (/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/.test(email) === false)
+        {
+          swal("Please enter a valid email! <html><br></html>For e.g. abc@zmail.com");
+
+        }
+		$('#email_err').text('');
+		err_c==0;
+
+		}
+
+
+		if(mobile==''){
+		$('#mob_err').text('Mobile field cannot be empty');
+		err_c+=1;
+
+
+		}
+		else{
+
+		if(mob_n<10 || mob_n>10){
+		swal("Mobile number should be of 10 digits!!!")
+		err_c+=1;}
+		else{
+		$('#mob_err').text('');
+		err_c==0;}
+
+		}
+		if(date==''){
+		$('#dob_err').text('Dob field cannot be empty');
+		err_c+=1;
+
+
+		}
+		else{
+		$('#dob_err').text('');
+		err_c==0;
+
+		}
+
+		var dob = new Date(date);
+    var month_diff = Date.now() - dob.getTime();
+    var age_dt = new Date(month_diff);
+    var year = age_dt.getUTCFullYear();
+    var age = Math.abs(year - 1970);
+
+
+    if(age <  18){
+    $('#dob_err1').text('You are under 18!!!');
+		err_c+=1;
+		          }
+		else{
+		$('#dob_err1').text('');
+		err_c==0;
+		}
+
+
+		if(err_c==0){
+	$.ajax({ // create an AJAX call...
+        data: $('#reg').serialize(), // get the form data
+        type: $('#reg').attr('method'), // GET or POST
+        url: $('#reg').attr('action'), // the file to call
+        success: function (response) { // on success..
+             console.log(response);
+           if(response.status==1){
+			swal({title: "Success", text: "User Added Successfully", type: 
+"success"}).then(function(){ 
+   window.location.reload();
+   }
+);
+				
+           }else{
+           		swal("Something went Wrong!...")
+           }
+
+           }
+
+        });
+        }
+    });
+
+</script>
+<script>
+function Delete_me(id){
+	URl=$.get("/delete?id="+id,function(response) {
+		if(response.status==1){
+				
+			swal({title: "Success", text: "User Deleted Successfully", type: 
+"success"}).then(function(){ 
+   window.location.reload();
+   }
+);
+				
+           }else{
+           		swal("Something went Wrong!...")
+           }
+
+		
+	});   
+}
+
+</script>
+
+
+</body>
+</html>
